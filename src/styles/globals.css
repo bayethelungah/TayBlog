@@ -12,6 +12,7 @@
   border: 1px solid var(--Primary-color);
   border-radius: 15px;
   color: white;
+  transition: 300ms ease-in;
 }
 
 .btn:hover {
@@ -24,6 +25,7 @@
   border: 1px solid var(--Primary-color);
   color: var(--Primary-color);
   border-radius: 15px;
+  transition: 300ms ease-in;
 }
 
 .btn-outline:hover {
