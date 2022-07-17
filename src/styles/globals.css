@@ -1,3 +1,32 @@
+:root {
+  --Primary-color: rgb(44, 79, 194);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+  padding: 10px;
+  background-color: var(--Primary-color);
+  border: 1px solid var(--Primary-color);
+  border-radius: 15px;
+  color: white;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: var(--Primary-color);
+}
+
+.btn-outline {
+  padding: 10px;
+  border: 1px solid var(--Primary-color);
+  color: var(--Primary-color);
+  border-radius: 15px;
+}
+
+.btn-outline:hover {
+  color: white;
+  background-color: var(--Primary-color);
+}
