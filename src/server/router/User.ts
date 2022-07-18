@@ -37,6 +37,8 @@ export const UserRouter = createRouter()
       if (!res) return { token: null };
       return {
         token: jwt.sign(input.email, "secretket"),
+        username: res.username,
+        fullName: res.fullname,
       };
     },
   });
