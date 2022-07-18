@@ -20,7 +20,7 @@ const register = (props: Props) => {
       console.error(createUserMutation.error.message);
       return;
     }
-    router.push("/posts");
+    router.push("/login");
   };
 
   return (
@@ -33,7 +33,7 @@ const register = (props: Props) => {
 
       <div className="flex justify-center items-center h-screen">
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
-          <h1 className="text-2xl">Login</h1>
+          <h1 className="text-2xl">Register</h1>
           <input
             className="border rounded-3xl p-3"
             type="text"
