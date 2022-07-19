@@ -15,12 +15,14 @@ type LoginProps = {
   email: string;
   username: string;
   fullName: string;
+  token: string;
 };
 
 type UserInfoType = {
   email: string;
   username: string;
   fullName: string;
+  token: string;
 };
 
 const contextDefaultValues: AppContextType = {
@@ -40,8 +42,9 @@ export function AppContextProvider({ children }: AppContextProvider) {
   const [info, setInfo] = useState<UserInfoType | null>(null);
 
   const value = {
-    login: ({ username, email }: LoginProps) => {
+    login: ({ username, email, fullName, token }: LoginProps) => {
       setOnline(true);
+      setInfo({ username, email, fullName, token });
     },
 
     logout: () => {
