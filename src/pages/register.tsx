@@ -5,6 +5,14 @@ import Head from "next/head";
 
 type Props = {};
 
+type RegisterArgs = {
+  username: string;
+  email: string;
+  password: string;
+  fullName: string;
+  e: React.MouseEvent<Element, globalThis.MouseEvent>;
+};
+
 const register = (props: Props) => {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -13,7 +21,13 @@ const register = (props: Props) => {
   const createUserMutation = trpc.useMutation("UserRouter.create-user");
   const router = useRouter();
 
-  const handleRegister = (e: any) => {
+  const handleRegister = ({
+    e,
+    password,
+    fullName,
+    username,
+    email,
+  }: RegisterArgs) => {
     e.preventDefault();
     createUserMutation.mutate({ username, email, password, fullName });
     if (createUserMutation.error) {
@@ -58,11 +72,16 @@ const register = (props: Props) => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={(e) => handleRegister(e)} className="btn mt-2">
+          <button
+            onClick={(e) =>
+              handleRegister({ e, password, fullName, username, email })
+            }
+            className="btn mt-2"
+          >
             Login
           </button>
           <a href="/login" className=" text-cyan-600">
-            Dont Have an account?
+            Aready Have An Account?
           </a>
         </form>
       </div>
