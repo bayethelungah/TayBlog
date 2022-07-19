@@ -3,22 +3,44 @@ import { trpc } from "../utils/trpc";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useAppContext } from "./context/state";
+
+type loginArgs = {
+  e: React.MouseEvent<Element, globalThis.MouseEvent>;
+  email: string;
+  password: string;
+};
 
 const login = (props: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const loginMutaion = trpc.useMutation(["UserRouter.login-user"]);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const loginMutation = trpc.useMutation(["UserRouter.login-user"]);
+  const { login } = useAppContext();
   const router = useRouter();
 
-  const handleLogin = (e: any) => {
+  const handleLogin = ({ e, password, email }: loginArgs) => {
     e.preventDefault();
-    loginMutaion.mutate({ email, password });
+    loginMutation.mutate({ email, password });
 
-    if (!loginMutaion.data?.token) {
-      console.log("failed to login");
+    if (loginMutation.data == undefined) {
+      console.error("No Data Was Recieved");
+      setLoginError("No Data Found");
       return;
     }
-    localStorage.setItem("token", loginMutaion.data.token);
+
+    if (loginMutation.data.error !== null) {
+      console.error(loginMutation.data.error);
+      setLoginError(loginMutation.data.error);
+      return;
+    }
+
+    login({
+      email,
+      username: loginMutation.data.username,
+      fullName: loginMutation.data.fullName,
+      token: loginMutation.data.token,
+    });
     router.push("/posts");
   };
 
@@ -44,7 +66,17 @@ const login = (props: Props) => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={(e) => handleLogin(e)} className="btn mt-2">
+          {loginError && (
+            <>
+              <div className="flex justify-center items-center bg-red-400 p-1 rounded-3xl w-full">
+                <p className=" text-teal-50">{loginError}</p>
+              </div>
+            </>
+          )}
+          <button
+            onClick={(e) => handleLogin({ e, password, email })}
+            className="btn mt-2"
+          >
             Login
           </button>
           <a href="/register" className=" text-cyan-600">
