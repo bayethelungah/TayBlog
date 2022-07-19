@@ -1,4 +1,3 @@
-type Props = {};
 import { trpc } from "../utils/trpc";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -11,7 +10,7 @@ type loginArgs = {
   password: string;
 };
 
-const login = (props: Props) => {
+const login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<string | null>(null);
