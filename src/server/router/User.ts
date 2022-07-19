@@ -33,12 +33,19 @@ export const UserRouter = createRouter()
           email: input.email,
         },
       });
+      if (!res || res.password !== input.password)
+        return {
+          token: null,
+          username: null,
+          fullName: null,
+          error: !res ? "User Does Not Exist" : "Password is Incorrect",
+        };
 
-      if (!res) return { token: null };
       return {
-        token: jwt.sign(input.email, "secretket"),
+        token: jwt.sign(input.email, "secretkey"),
         username: res.username,
         fullName: res.fullname,
+        error: null,
       };
     },
   });
