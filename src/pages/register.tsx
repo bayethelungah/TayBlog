@@ -45,7 +45,10 @@ const register = (props: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen flex-col gap-2">
+        <a href="/" className="text-2xl font-semibold hover:cursor-pointer">
+          TayBlog
+        </a>
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
           <h1 className="text-2xl">Register</h1>
           <input
