@@ -2,9 +2,15 @@
   --Primary-color: #6c63ff;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Dosis", sans-serif;
+}
 
 .btn {
   padding: 10px;
