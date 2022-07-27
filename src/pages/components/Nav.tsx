@@ -1,16 +1,11 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { useAppContext } from "../context/state";
+import { useSession, signOut } from "next-auth/react";
 
-type Props = {};
-
-function Nav({}: Props) {
-  const { getUserInfo, logout } = useAppContext();
-
-  console.log(getUserInfo());
+function Nav() {
+  const { data } = useSession();
 
   return (
-    <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2 shadow-lg ">
+    <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2 shadow ">
       <h1 className="text-2xl">
         {" "}
         <strong>TayBlog</strong>{" "}
@@ -28,7 +23,7 @@ function Nav({}: Props) {
         >
           Posts
         </motion.a>
-        {getUserInfo() == null && (
+        {data == null && (
           <>
             <motion.a
               href="/login"
@@ -46,14 +41,21 @@ function Nav({}: Props) {
             </motion.a>
           </>
         )}
-        {getUserInfo() !== null && (
+        {data && (
           <>
-            <motion.button className="text-xl duration-300  hover:cursor-pointer btn-outline">
-              {getUserInfo()?.username}
-            </motion.button>
+            <motion.a
+              href="/login"
+              className="text-xl duration-300  hover:cursor-pointer btn-outline p-1"
+              style={{ padding: "5px" }}
+            >
+              {data.user?.name}
+            </motion.a>
             <motion.button
-              onClick={() => logout()}
               className="text-xl duration-300  hover:cursor-pointer btn"
+              style={{ padding: "5px" }}
+              onClick={() => {
+                signOut();
+              }}
             >
               Sign Out
             </motion.button>
