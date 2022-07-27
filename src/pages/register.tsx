@@ -1,42 +1,15 @@
-import React, { useState } from "react";
-import { trpc } from "../utils/trpc";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { signIn } from "next-auth/react";
+import { MouseEvent } from "react";
 
-type Props = {};
-
-type RegisterArgs = {
-  username: string;
-  email: string;
-  password: string;
-  fullName: string;
-  e: React.MouseEvent<Element, globalThis.MouseEvent>;
-};
-
-const register = (props: Props) => {
-  const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-  const [fullName, setFullName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const createUserMutation = trpc.useMutation("UserRouter.create-user");
+const register = () => {
   const router = useRouter();
 
-  const handleRegister = ({
-    e,
-    password,
-    fullName,
-    username,
-    email,
-  }: RegisterArgs) => {
+  const handleRegister = (e: MouseEvent) => {
     e.preventDefault();
-    createUserMutation.mutate({ username, email, password, fullName });
-    if (createUserMutation.error) {
-      console.error(createUserMutation.error.message);
-      return;
-    }
-    router.push("/login");
+    signIn("github");
   };
-
   return (
     <section>
       <Head>
@@ -51,41 +24,9 @@ const register = (props: Props) => {
         </a>
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
           <h1 className="text-2xl">Register</h1>
-          <input
-            className="border rounded-3xl p-3"
-            type="text"
-            placeholder="Full Name"
-            onChange={(e) => setFullName(e.target.value)}
-          />
-          <input
-            className="border rounded-3xl p-3"
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            className="border rounded-3xl p-3"
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="border rounded-3xl p-3"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            onClick={(e) =>
-              handleRegister({ e, password, fullName, username, email })
-            }
-            className="btn mt-2"
-          >
-            Login
+          <button className="btn" onClick={(e) => handleRegister(e)}>
+            Register With Github
           </button>
-          <a href="/login" className=" text-cyan-600">
-            Aready Have An Account?
-          </a>
         </form>
       </div>
     </section>
