@@ -32,7 +32,7 @@ const Home: NextPage = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_705_220)">
+              <g>
                 <path
                   d="M582.22 581.842L570.788 581.841L565.352 537.745L582.224 537.746L582.22 581.842Z"
                   fill="#FFB8B8"
@@ -170,11 +170,6 @@ const Home: NextPage = () => {
                   fill="white"
                 />
               </g>
-              <defs>
-                <clipPath id="clip0_705_220">
-                  <rect width="631.483" height="593.941" fill="white" />
-                </clipPath>
-              </defs>
             </svg>
           </div>
         </div>
