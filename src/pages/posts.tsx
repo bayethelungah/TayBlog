@@ -4,12 +4,18 @@ import { trpc } from "../utils/trpc";
 import Nav from "./components/Nav";
 import Sidebar from "./components/Sidebar";
 
-type Props = {};
+const posts = () => {
+  const posts = trpc.useQuery(["PostRouter.get-all-posts"]);
 
-const posts = (props: Props) => {
-  const posts = trpc.useQuery(["PostRouter.get-all-posts"]).data;
+  if (posts.data === undefined) {
+    return (
+      <div className="flex">
+        <h1>Couldn't fetch any posts'</h1>
+      </div>
+    );
+  }
 
-  if (posts == undefined)
+  if (posts.isLoading)
     return (
       <div className="text-2xl flex justify-center items-center h-screen">
         <svg
@@ -275,20 +281,18 @@ const posts = (props: Props) => {
       <Sidebar />
       <main className="flex justify-center items-center h-screen">
         <div className="flex flex-col justify-center items-center max-w-screen-xl">
-          {posts.length < 1 && (
+          {posts.data.length < 1 && (
             <>
               <h1 className="text-2xl">Looks like theres no posts </h1>
             </>
           )}
-
-          {posts.length > 0 && (
+          {posts.data.length > 0 && (
             <>
-              {posts.map((post) => {
-                return (
-                  <>
-                    <h1>{post.body}</h1>
-                  </>
-                );
+              {posts.data.map((post, idx) => {
+                <div className="flex">
+                  <h1 className="text-2xl">{post.title}</h1>
+                  <p>{post.body}</p>
+                </div>;
               })}
             </>
           )}
