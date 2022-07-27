@@ -3,16 +3,18 @@ import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
+import { SessionProvider } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
 import "../styles/globals.css";
-import { AppContextProvider } from "./context/state";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
-    <>
-      <AppContextProvider>
-        <Component {...pageProps} />;
-      </AppContextProvider>
-    </>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />;
+    </SessionProvider>
   );
 };
 
@@ -46,5 +48,5 @@ export default withTRPC<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: false,
+  ssr: true,
 })(MyApp);
