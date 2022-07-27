@@ -7,8 +7,7 @@ function Nav() {
   return (
     <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2 shadow ">
       <h1 className="text-2xl">
-        {" "}
-        <strong>TayBlog</strong>{" "}
+        <strong>TayBlog</strong>
       </h1>
       <div className="flex justify-center items-center gap-4">
         <motion.a
@@ -44,7 +43,7 @@ function Nav() {
         {data && (
           <>
             <motion.a
-              href="/login"
+              href="/settings"
               className="text-xl duration-300  hover:cursor-pointer btn-outline p-1"
               style={{ padding: "5px" }}
             >
