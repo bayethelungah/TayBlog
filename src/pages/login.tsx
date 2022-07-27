@@ -2,9 +2,7 @@ import { trpc } from "../utils/trpc";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useAppContext } from "./context/state";
-import jwt from "jsonwebtoken";
-import { env } from "process";
+import { useSession, signIn } from "next-auth/react";
 
 type loginArgs = {
   e: React.MouseEvent<Element, globalThis.MouseEvent>;
@@ -16,34 +14,16 @@ const login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<string | null>(null);
-  const loginMutation = trpc.useMutation(["UserRouter.login-user"]);
-  const { login } = useAppContext();
+  const { status } = useSession();
   const router = useRouter();
 
-  const handleLogin = ({ e, password, email }: loginArgs) => {
-    e.preventDefault();
-    loginMutation.mutate({ email, password });
-
-    if (loginMutation.data == undefined) {
-      console.error("No Data Was Recieved");
-      setLoginError("No Data Found");
-      return;
-    }
-
-    if (loginMutation.data.error !== null) {
-      console.error(loginMutation.data.error);
-      setLoginError(loginMutation.data.error);
-      return;
-    }
-
-    login({
-      email,
-      username: loginMutation.data.username,
-      fullName: loginMutation.data.fullName,
-      token: loginMutation.data.token,
-    });
-    localStorage.setItem("token", loginMutation.data.token);
+  if (status == "authenticated") {
     router.push("/posts");
+  }
+
+  const handleLogin = (e: any) => {
+    e.preventDefault();
+    signIn("github");
   };
 
   return (
@@ -59,18 +39,7 @@ const login = () => {
         </a>
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
           <h1 className="text-2xl">Login</h1>
-          <input
-            className="border rounded-3xl p-3"
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="border rounded-3xl p-3"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+
           {loginError && (
             <>
               <div className="flex justify-center items-center bg-red-400 p-1 rounded-3xl w-full">
@@ -78,12 +47,11 @@ const login = () => {
               </div>
             </>
           )}
-          <button
-            onClick={(e) => handleLogin({ e, password, email })}
-            className="btn mt-2"
-          >
-            Login
+
+          <button onClick={(e) => handleLogin(e)} className="btn mt-2">
+            Sign In With Github
           </button>
+
           <a href="/register" className=" text-cyan-600">
             Dont Have an account?
           </a>
