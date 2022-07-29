@@ -1,9 +1,27 @@
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import Nav from "./components/Nav";
+import { trpc } from "../utils/trpc";
+import { useState } from "react";
 
 const createPost = () => {
   const { data } = useSession();
+  const [body, setBody] = useState("");
+  const [title, setTitle] = useState("");
+
+  const createPostMutation = trpc.useMutation("PostRouter.create-post");
+
+  const handleCreatePost = () => {
+    if (!data) return;
+    if (!data.user) return;
+    if (!data.user.name) return;
+    createPostMutation.mutate({
+      body,
+      title,
+      author: data.user.name?.toString(),
+      User: data.user,
+    });
+  };
 
   if (!data) {
     return (
@@ -35,10 +53,23 @@ const createPost = () => {
       </Head>
       <Nav />
       <main className="h-full flex justify-center items-center ">
-        <form className="flex justify-center items-center p-5 shadow-xl border flex-col gap-3 rounded-2xl">
-          <label className="text-3xl">Write Whatever</label>
-          <input type="text" className="w-30 h-20 border" />
-          <button className="btn">Post</button>
+        <form className="flex justify-center items-center p-10 shadow-xl border flex-col gap-3 rounded-2xl">
+          <label className="text-2xl">Write Whatever</label>
+          <input
+            type="text"
+            className="border rounded p-1"
+            placeholder="Title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <textarea
+            className="border"
+            rows={5}
+            cols={60}
+            onChange={(e) => setBody(e.target.value)}
+          />
+          <button className="btn" onClick={() => handleCreatePost()}>
+            Post
+          </button>
         </form>
       </main>
     </section>
