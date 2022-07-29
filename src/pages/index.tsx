@@ -20,7 +20,7 @@ const Home: NextPage = () => {
             <p className="text-xl">
               This is my personal Blog where I document my engineering journey.
             </p>
-            <a href="/posts" className="btn w-32 text-center">
+            <a href="/showPosts" className="btn w-32 text-center">
               Posts
             </a>
           </div>
