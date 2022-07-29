@@ -6,21 +6,23 @@ function Nav() {
 
   return (
     <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2 shadow ">
-      <h1 className="text-2xl">
-        <strong>TayBlog</strong>
-      </h1>
+      <a href="/">
+        <h1 className="text-2xl">
+          <strong>TayBlog</strong>
+        </h1>
+      </a>
       <div className="flex justify-center items-center gap-4">
-        <motion.a
-          href="/"
-          className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
-        >
-          Home
-        </motion.a>
         <motion.a
           href="/showPosts"
           className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
         >
           Posts
+        </motion.a>
+        <motion.a
+          href="/createPost"
+          className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
+        >
+          Write
         </motion.a>
         {data == null && (
           <>
