@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const Sidebar = (props: Props) => {
+const Sidebar = () => {
   return (
     <div className="fixed left-0 top-16 h-screen border-r w-44 shadow-md">
       <div className="flex flex-col justify-center items-center">
