@@ -12,6 +12,11 @@ type Post = {
   body: string;
   author: string;
   id: string;
+  title: string;
+};
+
+type PostProps = {
+  post: Post;
 };
 
 export async function getStaticPaths() {
@@ -49,13 +54,16 @@ export async function getStaticProps(context: any) {
         body: response.body,
         title: response.title,
         id: response.id,
+        author: response.author,
       },
     },
   };
 }
 
-export default function posts({ post }: any) {
+export default function posts({ post }: PostProps) {
   if (!post) return;
+
+  console.log(post);
   return (
     <section>
       <Head>
@@ -67,8 +75,8 @@ export default function posts({ post }: any) {
 
       <main className="flex h-screen justify-center items-center">
         <div className="flex flex-col justify-center items-center shadow-2xl p-5 rounded-2xl">
+          <h2 className="text-2xl text-cyan-600  ">{post.author}</h2>
           <h1 className="text-4xl">{post.title}</h1>
-          <h2 className="text-2xl">{post.author}</h2>
           <p className="text-lg">{post.body}</p>
         </div>
       </main>
