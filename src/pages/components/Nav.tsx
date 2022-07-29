@@ -17,7 +17,7 @@ function Nav() {
           Home
         </motion.a>
         <motion.a
-          href="/posts"
+          href="/showPosts"
           className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
         >
           Posts
