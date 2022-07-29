@@ -63,7 +63,6 @@ export async function getStaticProps(context: any) {
 export default function posts({ post }: PostProps) {
   if (!post) return;
 
-  console.log(post);
   return (
     <section>
       <Head>
