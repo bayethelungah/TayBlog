@@ -18,7 +18,7 @@ const login = () => {
   const router = useRouter();
 
   if (status == "authenticated") {
-    router.push("/allPosts");
+    router.push("/showPosts");
   }
 
   const handleLogin = (e: any) => {
