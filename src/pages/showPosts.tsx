@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import Nav from "./components/Nav";
-import Sidebar from "./components/Sidebar";
 
 const showPosts = () => {
   const posts = trpc.useQuery(["PostRouter.get-all-posts"]);
@@ -278,7 +277,6 @@ const showPosts = () => {
       </Head>
 
       <Nav />
-      <Sidebar />
       <main className="flex justify-center items-center h-screen w-full">
         <div className="flex flex-col justify-center items-center max-w-screen-xl gap-4">
           {posts.data.length < 1 && (
