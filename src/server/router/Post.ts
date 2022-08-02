@@ -1,6 +1,7 @@
 import { createRouter } from "./context";
 import { z } from "zod";
 import { prisma } from "../db/client";
+import { resolve } from "path/posix";
 
 export const PostRouter = createRouter()
   .query("get-all-posts", {
@@ -12,9 +13,9 @@ export const PostRouter = createRouter()
   })
   .mutation("create-post", {
     input: z.object({
-      author: z.string(),
-      body: z.string(),
-      title: z.string(),
+      author: z.string().min(5).max(100),
+      body: z.string().min(5).max(100),
+      title: z.string().min(5).max(100),
       User: z.object({
         name: z.string().nullish(),
         email: z.string().nullish(),
@@ -28,6 +29,16 @@ export const PostRouter = createRouter()
           body: input.body,
           title: input.title,
         },
+      });
+    },
+  })
+  .mutation("delete-post", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input }) {
+      await prisma.post.delete({
+        where: { id: input.id },
       });
     },
   });
