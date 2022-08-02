@@ -1,8 +1,10 @@
-import { trpc } from "../utils/trpc";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import type { NextPage } from "next";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
-import { useSession, signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { trpc } from "../utils/trpc";
 
 type loginArgs = {
   e: React.MouseEvent<Element, globalThis.MouseEvent>;
@@ -10,7 +12,7 @@ type loginArgs = {
   password: string;
 };
 
-const login = () => {
+const Login: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<string | null>(null);
@@ -34,9 +36,9 @@ const login = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col justify-center items-center h-screen gap-2">
-        <a href="/" className="text-2xl font-semibold hover:cursor-pointer">
+        <Link href="/" className="text-2xl font-semibold hover:cursor-pointer">
           TayBlog
-        </a>
+        </Link>
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
           <h1 className="text-2xl">Login</h1>
 
@@ -52,13 +54,13 @@ const login = () => {
             Sign In With Github
           </button>
 
-          <a href="/register" className=" text-cyan-600">
+          <Link href="/register" className=" text-cyan-600">
             Dont Have an account?
-          </a>
+          </Link>
         </form>
       </div>
     </section>
   );
 };
 
-export default login;
+export default Login;

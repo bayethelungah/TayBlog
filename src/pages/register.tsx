@@ -1,9 +1,11 @@
-import { useRouter } from "next/router";
-import Head from "next/head";
+import { NextPage } from "next";
 import { signIn } from "next-auth/react";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { MouseEvent } from "react";
 
-const register = () => {
+const Register: NextPage = () => {
   const router = useRouter();
 
   const handleRegister = (e: MouseEvent) => {
@@ -19,9 +21,9 @@ const register = () => {
       </Head>
 
       <div className="flex justify-center items-center h-screen flex-col gap-2">
-        <a href="/" className="text-2xl font-semibold hover:cursor-pointer">
+        <Link href="/" className="text-2xl font-semibold hover:cursor-pointer">
           TayBlog
-        </a>
+        </Link>
         <form className="flex flex-col justify-center items-center p-20 border rounded-xl gap-3 shadow-lg">
           <h1 className="text-2xl">Register</h1>
           <button className="btn" onClick={(e) => handleRegister(e)}>
@@ -33,4 +35,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
