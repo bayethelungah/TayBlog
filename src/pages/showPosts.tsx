@@ -1,15 +1,40 @@
-import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import Nav from "./components/Nav";
 
-const showPosts = () => {
+const PostVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const PostChildren = {
+  hidden: {
+    opacity: 0,
+    x: 100,
+  },
+  show: {
+    opacity: 1,
+    x: 0,
+  },
+};
+
+const showPosts: NextPage = () => {
   const posts = trpc.useQuery(["PostRouter.get-all-posts"]);
 
   if (posts.data === undefined) {
     return (
-      <div className="flex">
-        <h1>Couldn't fetch any posts'</h1>
+      <div className="text-2xl flex justify-center items-center h-screen">
+        <h1>Could not fetch any posts</h1>
       </div>
     );
   }
@@ -278,7 +303,12 @@ const showPosts = () => {
 
       <Nav />
       <main className="flex justify-center items-center h-screen w-full">
-        <div className="flex flex-col justify-center items-center max-w-screen-xl gap-4">
+        <motion.div
+          variants={PostVariant}
+          animate="show"
+          initial="hidden"
+          className="flex flex-col justify-center items-center max-w-screen-xl gap-4 mt-28"
+        >
           {posts.data.length < 1 && (
             <>
               <h1 className="text-2xl">Looks like theres no posts </h1>
@@ -288,7 +318,9 @@ const showPosts = () => {
             <>
               {posts.data.map((post, idx) => {
                 return (
-                  <a
+                  <motion.a
+                    whileHover={{ scale: 1.1 }}
+                    variants={PostChildren}
                     key={idx}
                     style={{ width: "800px" }}
                     className="flex flex-col justify-start items-start shadow-2xl rounded-3xl p-5 w-2/3"
@@ -297,12 +329,12 @@ const showPosts = () => {
                     <h1 className="text-2xl bold">{post.author}</h1>
                     <h2 className="text-2xl text-gray-800">{post.title}</h2>
                     <p className="text-lg">{post.body}</p>
-                  </a>
+                  </motion.a>
                 );
               })}
             </>
           )}
-        </div>
+        </motion.div>
       </main>
     </section>
   );
