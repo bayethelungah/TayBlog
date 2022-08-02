@@ -5,22 +5,32 @@ function Nav() {
   const { data } = useSession();
 
   return (
-    <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2 shadow ">
-      <a href="/">
-        <h1 className="text-2xl">
-          <strong>TayBlog</strong>
-        </h1>
-      </a>
-      <div className="flex justify-center items-center gap-4">
+    <nav className="fixed flex justify-around items-center top-0 left-0 w-screen h-14 mt-2  ">
+      <motion.a
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring" }}
+        href="/"
+      >
+        <h1 className="text-2xl font-bold">TayBlog</h1>
+      </motion.a>
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring" }}
+        className="flex justify-center items-center gap-4"
+      >
         <motion.a
           href="/showPosts"
-          className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
+          whileHover={{ cursor: "pointer", color: "#6c63ff" }}
+          className="text-xl duration-100"
         >
           Posts
         </motion.a>
         <motion.a
           href="/createPost"
-          className="text-xl duration-300  hover:cursor-pointer hover:text-cyan-800"
+          whileHover={{ cursor: "pointer", color: "#6c63ff" }}
+          className="text-xl duration-100"
         >
           Write
         </motion.a>
@@ -30,6 +40,7 @@ function Nav() {
               href="/login"
               className="text-xl duration-300  hover:cursor-pointer btn-outline p-1"
               style={{ padding: "5px" }}
+              whileHover={{ color: "white" }}
             >
               Login
             </motion.a>
@@ -62,7 +73,7 @@ function Nav() {
             </motion.button>
           </>
         )}
-      </div>
+      </motion.div>
     </nav>
   );
 }
