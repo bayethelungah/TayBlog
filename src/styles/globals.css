@@ -2,16 +2,6 @@
   --Primary-color: #6c63ff;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: "Dosis", sans-serif;
-}
-
 .btn {
   padding: 10px;
   background-color: var(--Primary-color);
@@ -37,4 +27,24 @@ body {
 .btn-outline:hover {
   color: white;
   background-color: var(--Primary-color);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+
+.line {
+  height: 1px;
+  width: 100px;
+  background-color: grey;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Dosis", sans-serif;
+}
+
+.primary-col {
+  color: var(--Primary-color);
 }
